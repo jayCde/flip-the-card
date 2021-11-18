@@ -4,7 +4,7 @@
   text-align: center;
 }
 
-button{
+.btn-start-game{
   background: linear-gradient( #E44D26 50%, #F16529 50%);
   border: 2px solid #fff;
   padding: 6px 12px;
@@ -16,22 +16,32 @@ button{
   transition: 0.4s;
 }
 
-button:hover{
+.btn-start-game:hover{
   color: #000;
   background-color: #fff;
   transition: 0.5s;
 }
+
+.card-grid{
+  margin: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  row-gap: 20px;
+  column-gap: 10px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  button {
-    animation: button-bounce infinite 20s linear;
+  .btn-start-game {
+    animation: button-rotate infinite 5s linear;
   }
 }
 
-@keyframes button-bounce {
+@keyframes button-rotate {
   from {
     transform: (0deg);
   }
   to {
-    transform: rotate(25deg);
+    transform: rotateY(180deg);
+    opacity: 0.4;
   }
 }
