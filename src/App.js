@@ -52,8 +52,8 @@ function App() {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
-    //Players progress / lifeline
-    let playerLifelimit = `${Math.round((turns * 100) / cards.length)}%`;
+  //Players progress / lifeline
+  let playerLifelimit = `${Math.round((turns * 100) / cards.length)}%`;
 
   //component state comparisons
   useEffect(() => {
@@ -103,30 +103,25 @@ function App() {
   return (
     <div className="App">
       <h4>Flip the Card</h4>
-      <button className="btn-start-game" onClick={shuffleCards}>{gameStatus}</button>
+      <button className="btn-start-game" onClick={shuffleCards}>
+        {gameStatus}
+      </button>
 
       {/*Display game over modal based on condition*/}
-      {gameOver === true && 
-          <div style={{marginLeft: '50px'}}type="button" class="btn btn-primary position-relative">
-            Score
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              99+
-              <span class="visually-hidden">unread messages</span>
-            </span>
-          </div>
-      }
-      {/*Puzzle cards*/}
-      <div className="card-grid">
-        {cards.map((card) => (
-          <CardComponent
-            key={card.id}
-            card={card}
-            handleChoice={handleChoice}
-            flipped={card === choiceOne || card === choiceTwo || card.matched}
-            disabled={disabled}
-          />
-        ))}
-      </div>
+      {gameOver === true && (
+        <div
+          style={{ marginLeft: "50px" }}
+          type="button"
+          class="btn btn-primary position-relative"
+        >
+          Score
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            99+
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </div>
+      )}
+
       {/*Total activities in current game mode*/}
       <p className="">
         Total number of turns: {turns}/ {cards.length}
@@ -143,6 +138,19 @@ function App() {
           aria-valuemax="100"
         ></div>
         <span>{playerLifelimit}</span>
+      </div>
+
+      {/*Puzzle cards*/}
+      <div className="card-grid">
+        {cards.map((card) => (
+          <CardComponent
+            key={card.id}
+            card={card}
+            handleChoice={handleChoice}
+            flipped={card === choiceOne || card === choiceTwo || card.matched}
+            disabled={disabled}
+          />
+        ))}
       </div>
     </div>
   );
