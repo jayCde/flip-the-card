@@ -30,6 +30,7 @@ function App() {
   const [disabled, setDisabled] = useState(false);
   const [gameOver, setgameOver] = useState(false);
   const [gameStatus, setgameStatus] = useState("Start A new game...");
+  const [successfulMatch, setSuccessfulMatch] = useState(0);
 
   //shuffle cards
   function shuffleCards() {
@@ -40,11 +41,13 @@ function App() {
     setChoiceTwo(null);
     setCards(shuffleCards);
     setTurns(0);
+    setgameOver(false);
   }
 
   //Launch game on page load
   useEffect(() => {
     shuffleCards();
+    setSuccessfulMatch(0);
   }, []);
 
   //Handle choice
@@ -61,6 +64,8 @@ function App() {
     if (choiceOne && choiceTwo) {
       setDisabled(true);
       if (choiceOne.src === choiceTwo.src) {
+        setSuccessfulMatch(successfulMatch +1);
+        console.log("cards matched so far", successfulMatch);
         setCards((prevCards) => {
           return prevCards.map((card) => {
             if (card.src === choiceOne.src) {
@@ -70,10 +75,12 @@ function App() {
             }
           });
         });
-        console.log("cards match");
+        
+        // console.log("cards match");
         resetTurn();
       } else {
         console.log("cards do not match");
+        console.log("cards matched so far", successfulMatch);
         setTimeout(() => resetTurn(), 2000);
       }
     }
@@ -88,10 +95,10 @@ function App() {
       setDisabled(true);
       setgameStatus("Play Again");
     }
-  }, [choiceOne, choiceTwo, playerLifelimit, turns]);
+  }, [choiceOne, choiceTwo, playerLifelimit, turns, successfulMatch]);
 
-  console.log(cards);
 
+  //Reset turn function
   const resetTurn = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
@@ -99,6 +106,9 @@ function App() {
     setDisabled(false);
     setgameOver(false);
   };
+
+    //Players high score
+    let highScore = Math.round((successfulMatch/cards.length)*100)
 
   return (
     <div className="App">
@@ -112,12 +122,12 @@ function App() {
         <div
           style={{ marginLeft: "50px" }}
           type="button"
-          class="btn btn-primary position-relative"
+          className="btn btn-primary position-relative"
         >
           Score
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            99+
-            <span class="visually-hidden">unread messages</span>
+          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {highScore}
+            <span className="visually-hidden">Your score</span>
           </span>
         </div>
       )}
@@ -131,7 +141,7 @@ function App() {
       <div className="progress">
         <div
           style={{ width: playerLifelimit }}
-          class="progress-bar bg-danger"
+          className="progress-bar bg-danger"
           role="progressbar"
           aria-valuenow={playerLifelimit}
           aria-valuemin="0"
