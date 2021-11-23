@@ -118,7 +118,6 @@ function App() {
       </button>
 
       {/*Display game over modal based on condition*/}
-      {gameOver === true && (
         <div
           style={{ marginLeft: "50px" }}
           type="button"
@@ -130,7 +129,6 @@ function App() {
             <span className="visually-hidden">Your score</span>
           </span>
         </div>
-      )}
 
       {/*Total activities in current game mode*/}
       <p className="">
